@@ -3,6 +3,7 @@ const cors = require('cors');
 const cats = require('./stores/cats');
 const dogs = require('./stores/dogs');
 const users = require('./stores/users');
+const adopted = require('./stores/adopted')
 const { getAll, peek } = require('./Queue');
 
 const app = express();
@@ -17,21 +18,25 @@ app.get('/api/dog', (req, res) => {
   res.json(200, getAll(dogs));
 })
 
-app.get('api/user', (req, res) => {
+app.get('/api/user', (req, res) => {
   res.json(200, getAll(users))
 })
 
+app.get('/api/adopted', (req, res) => {
+  res.json(200, getAll(adopted));
+})
+
 app.delete('/api/dog', (req, res) => {
-  dogs.dequeue();
+  adopted.enqueue(dogs.dequeue());
   res.send(201);
 });
 
 app.delete('/api/cat', (req, res) => {
-  cats.dequeue();
+  adopted.enqueue(cats.dequeue());
   res.send(201);
 });
 
-app.delete('api/cat', (req, res) => {
+app.delete('/api/user', (req, res) => {
   users.enqueue(users.dequeue());
   res.send(201);
 })
