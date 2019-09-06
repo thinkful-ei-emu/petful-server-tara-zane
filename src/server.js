@@ -36,9 +36,9 @@ app.delete('/api/cat', (req, res) => {
   res.send(201);
 });
 
-app.delete('/api/user', (req, res) => {
+app.patch('/api/user', (req, res) => {
   users.enqueue(users.dequeue());
-  res.send(201);
+  res.json(200, getAll(users));
 })
 // Catch-all Error handler
 // Add NODE_ENV check to prevent stacktrace leak
