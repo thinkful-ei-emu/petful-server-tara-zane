@@ -9,11 +9,11 @@ app.use(cors());
 
 
 app.get('/api/cat', (req, res) => {
-  res.json(getAll(cats));
+  res.json(200, getAll(cats));
 })
 
 app.get('/api/dog', (req, res) => {
-  res.json(peek(dogs));
+  res.json(200, peek(dogs));
 })
 
 app.delete('/api/dog', (req, res) => {
