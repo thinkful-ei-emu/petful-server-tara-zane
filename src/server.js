@@ -2,18 +2,29 @@ const express = require('express');
 const cors = require('cors');
 const cats = require('./stores/cats');
 const dogs = require('./stores/dogs');
+const { getAll, peek } = require('./Queue');
 
 const app = express();
 app.use(cors());
 
 
 app.get('/api/cat', (req, res) => {
-  res.json(cats[0]);
+  res.json(getAll(cats));
 })
 
 app.get('/api/dog', (req, res) => {
-  res.json(dogs[0]);
+  res.json(peek(dogs));
 })
+
+app.delete('/api/dog', (req, res) => {
+  dogs.dequeue();
+  res.send(201);
+});
+
+app.delete('/api/cat', (req, res) => {
+  cats.dequeue();
+  res.send(201);
+});
 // Catch-all Error handler
 // Add NODE_ENV check to prevent stacktrace leak
 app.use(function (req, res, next) {
