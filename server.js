@@ -1,10 +1,10 @@
 const express = require('express');
 const cors = require('cors');
-const cats = require('./stores/cats');
-const dogs = require('./stores/dogs');
-const users = require('./stores/users');
-const adopted = require('./stores/adopted')
-const { getAll, peek } = require('./Queue');
+const cats = require('./src/stores/cats');
+const dogs = require('./src/stores/dogs');
+const users = require('./src/stores/users');
+const adopted = require('./src/stores/adopted')
+const { getAll, peek } = require('./src/Queue');
 
 const app = express();
 app.use(cors());
