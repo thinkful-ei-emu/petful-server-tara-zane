@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const cats = require('./stores/cats');
 const dogs = require('./stores/dogs');
+const users = require('./stores/users');
 const { getAll, peek } = require('./Queue');
 
 const app = express();
@@ -13,7 +14,11 @@ app.get('/api/cat', (req, res) => {
 })
 
 app.get('/api/dog', (req, res) => {
-  res.json(200, peek(dogs));
+  res.json(200, getAll(dogs));
+})
+
+app.get('api/user', (req, res) => {
+  res.json(200, getAll(users))
 })
 
 app.delete('/api/dog', (req, res) => {
@@ -25,6 +30,11 @@ app.delete('/api/cat', (req, res) => {
   cats.dequeue();
   res.send(201);
 });
+
+app.delete('api/cat', (req, res) => {
+  users.enqueue(users.dequeue());
+  res.send(201);
+})
 // Catch-all Error handler
 // Add NODE_ENV check to prevent stacktrace leak
 app.use(function (req, res, next) {
