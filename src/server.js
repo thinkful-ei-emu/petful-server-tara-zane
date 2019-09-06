@@ -22,6 +22,11 @@ app.get('/api/user', (req, res) => {
   res.json(200, getAll(users))
 })
 
+app.patch('/api/user', (req, res) => {
+  users.enqueue(users.dequeue());
+  res.json(200, getAll(users));
+})
+
 app.get('/api/adopted', (req, res) => {
   res.json(200, getAll(adopted));
 })
@@ -36,10 +41,7 @@ app.delete('/api/cat', (req, res) => {
   res.send(201);
 });
 
-app.patch('/api/user', (req, res) => {
-  users.enqueue(users.dequeue());
-  res.json(200, getAll(users));
-})
+
 // Catch-all Error handler
 // Add NODE_ENV check to prevent stacktrace leak
 app.use(function (req, res, next) {
